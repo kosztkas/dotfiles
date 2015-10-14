@@ -1,7 +1,10 @@
+
+
 " Enable filetype plugins
 "filetype plugin on
 "filetype indent on
 
+set nocompatible " Throw away vi compatibility
 set autoread     " Set to auto read when a file is changed from the outside
 set ruler        " Always show current position
 set number       " Show line numbers
@@ -44,12 +47,15 @@ set tabstop=4
 
 syntax on
 filetype on
-au BufNewFile,BufRead *.zts set filetype=python
 
-
+"====Key remaps====
 "Bubble single lines-TODO
-nnoremap <silent> <C-Down> ddp
-nnoremap <silent> <C-Up> ddkP
+nnoremap <C-Down> ddp
+nnoremap <C-Up> ddkP
+
+" move to beginning/end of line
+nnoremap B ^
+nnoremap E $
 
 set listchars=tab:>-,trail:-
 set list
