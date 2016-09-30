@@ -27,6 +27,7 @@ set visualbell   " Flash screen instead of beep
 set colorcolumn=120
 set whichwrap+=<,>,h,l "Wrap arrow keys at the end of a line
 set backspace=eol,start,indent " Configure backspace so it acts as it should act
+set mouse-=a
 
 "Change the colors
 colorscheme molokai
@@ -52,6 +53,9 @@ filetype on
 "Bubble single lines-TODO
 nnoremap <C-Down> ddp
 nnoremap <C-Up> ddkP
+
+" toggle auto-indent for code paste mode w/ F2 key
+set pastetoggle=<F2>
 
 " move to beginning/end of line
 nnoremap B ^
