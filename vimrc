@@ -53,7 +53,13 @@ filetype on     " Let Vim detect the filetype
 set showmatch   " Show matching brackets
 set matchtime=5 " Duration to show matching brace
 
-"==== REMAPS ====
+"====== COMPLETION ======
+set completeopt=longest,menu
+set wildmode=longest:full
+set wildmenu
+set wildignorecase
+
+"====== REMAPS ======
 "Bubble single lines-TODO
 nnoremap <C-Down> ddp
 nnoremap <C-Up> ddkP
