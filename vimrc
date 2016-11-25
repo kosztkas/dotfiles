@@ -1,68 +1,66 @@
-
-
-" Enable filetype plugins
-"filetype plugin on
-"filetype indent on
-
 set nocompatible " Throw away vi compatibility
-set autoread     " Set to auto read when a file is changed from the outside
-set ruler        " Always show current position
-set number       " Show line numbers
 
-set ignorecase   " Ignore case when searching
-set smartcase    " When searching try to be smart about cases 
-set hlsearch     " Highlight search results
-set incsearch    " Makes search act like search in modern browsers
-set magic        " For regular expressions turn magic on
-"set title        " Show filename in window titlebar
+"====== GENERAL CONFIG ======
+set autoread                        " Set to auto read when a file is changed from the outside
+set ttyfast                         " Optimize for fast terminal connection
+set magic                           " For regular expressions turn magic on
+set backspace=eol,start,indent      " Configure backspace so it acts as it should act
+set whichwrap+=<,>,h,l              " Wrap arrow keys at the end of a line
+set virtualedit=onemore             " Allow the cursor to go one character after the end of the line
+set listchars=tab:>-,trail:·,nbsp:_ " Display trailing characters visually, eol:¬
+set list
+set mouse-=a                        " We don't need no mouse
 
-set ai           " Auto indent
-set si           " Smart indent
-set wrap         " Wrap lines
-set cul          " Highlight current line
+"====== SEARCH ======
+set ignorecase  " Ignore case when searching
+set smartcase   " When searching try to be smart about cases
+set hlsearch    " Highlight search results
+set incsearch   " Makes search act like search in modern browsers
 
-set ttyfast      " Optimize for fast terminal connection
-set visualbell   " Flash screen instead of beep
+"====== LOOK & FEEL ======
+set visualbell      " Flash screen instead of beep
+set number          " Show line numbers
+set ruler           " Always show current position
+set cul             " Highlight current line
+set colorcolumn=120 " Put a vertical line at 120 characters
+"set title          " Show filename in window titlebar
 
-set colorcolumn=120
-set whichwrap+=<,>,h,l "Wrap arrow keys at the end of a line
-set backspace=eol,start,indent " Configure backspace so it acts as it should act
-set mouse-=a
-
-"Change the colors
+" Use a neat theme
 colorscheme molokai
-"set background=dark
-
+set background=dark
 let g:molokai_original = 1
 
-"======TABS======
-" Use spaces instead of tabs
-set expandtab
+" Switch from block-cursor to vertical-line-cursor when going into/out of insert mode TODO
+"let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+"let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
-" Be smart when using tabs ;)
-"set smarttab
-
+"====== INDENTATION ======
+set ai          " Auto indent
+set si          " Smart indent
+set expandtab   " Use spaces instead of tabs
+set smarttab    " At start of line, <Tab> inserts shiftwidth spaces, <Bs> deletes shiftwidth spaces.
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
 
-syntax on
-filetype on
+"====== WRAP ======
+set wrap        " Wrap lines
+set linebreak   " Wrap lines at convenient points
 
-"====Key remaps====
+"====== SYNTAX HL ======
+syntax on       " Turn syntax highlighting on
+filetype on     " Let Vim detect the filetype
+set showmatch   " Show matching brackets
+set matchtime=5 " Duration to show matching brace
+
+"==== REMAPS ====
 "Bubble single lines-TODO
 nnoremap <C-Down> ddp
 nnoremap <C-Up> ddkP
 
-" toggle auto-indent for code paste mode w/ F2 key
-set pastetoggle=<F2>
-
 " move to beginning/end of line
 nnoremap B ^
 nnoremap E $
-
-set listchars=tab:>-,trail:-
-set list
 
 function ShowSpaces(...)
   let @/='\v(\s+$)|( +\ze\t)'
