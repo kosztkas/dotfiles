@@ -63,6 +63,10 @@ set wildignorecase
 " toggle auto-indent for code paste mode w/ F2 key		
 set pastetoggle=<F2>
 
+" toggle line numbers w/ F3 key
+noremap <F3> :set nu!<CR>
+inoremap <F3> <C-O>:set nu!<CR>
+
 "Bubble single lines-TODO
 nnoremap <C-Down> ddp
 nnoremap <C-Up> ddkP
