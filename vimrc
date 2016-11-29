@@ -60,6 +60,9 @@ set wildmenu
 set wildignorecase
 
 "====== REMAPS ======
+" toggle auto-indent for code paste mode w/ F2 key		
+set pastetoggle=<F2>
+
 "Bubble single lines-TODO
 nnoremap <C-Down> ddp
 nnoremap <C-Up> ddkP
