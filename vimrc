@@ -25,6 +25,9 @@ set cul             " Highlight current line
 set colorcolumn=120 " Put a vertical line at 120 characters
 "set title          " Show filename in window titlebar
 
+"clear screen on exit
+au VimLeave * :!clear
+
 " Use a neat theme
 colorscheme molokai
 set background=dark
