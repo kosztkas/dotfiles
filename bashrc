@@ -128,6 +128,9 @@ PS1='$(RET=$?; if [ $RET != 0 ]; then echo "\[\033[1;31m\]<$RET>"; else echo "\[
 alias fucking='sudo'
 alias dance='cowsay -f tux no'
 alias tmux='tmux -2'
+alias tf='terraform'
+alias tg='terragrunt'
+alias k='kubectl'
 
 #Make directory color not hurt my eyes
 force_color_prompt=yes
