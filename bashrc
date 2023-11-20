@@ -1,24 +1,42 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#Default from mac home
+PATH="/usr/local/bin:$PATH"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Silence the Mac zsh warning
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+fi
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# don't put duplicate lines in the history. See bash(1) for more options
+### HISTORY ###
+
+# Put timestamps in bash history
+export HISTTIMEFORMAT='%F %T '
+# Don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+# Save multiline commands as one history entry
+shopt -s cmdhist
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=10000
+
+# Don't record these commands in the history; who cares about ls?
+export HISTIGNORE='pwd:ls:ll:history:exit:bg:fg:clear'
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
+# Highlight section titles in manual pages.
+export LESS_TERMCAP_md="${ORANGE}"
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -65,6 +83,8 @@ xterm*|rxvt*)
     ;;
 esac
 
+#### ALIASES ####
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -90,6 +110,16 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+# Some useful aliases
+alias fucking='sudo '
+alias dance='cowsay -f tux no'
+alias tmux='tmux -2'
+alias python='python3'
+alias tf='terraform'
+alias tg='terragrunt'
+alias k='kubectl'
+alias cat='bat'
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -123,15 +153,41 @@ BROWN='\e[0;33m'
 YELLOW='\e[1;33m'
 GRAY='\e[0;30m'
 LIGHT_GRAY='\e[0;37m'
+
 PS1='$(RET=$?; if [ $RET != 0 ]; then echo "\[\033[1;31m\]<$RET>"; else echo "\[\033[1;32m\]<$RET>"; fi) \[\033[1;32m\]\u@\h:\[\033[1;34m\]\w\[\033[1;33m\]$(parse_git_branch) \[\033[0m\]\$ '
 
-alias fucking='sudo'
-alias dance='cowsay -f tux no'
-alias tmux='tmux -2'
-alias tf='terraform'
-alias tg='terragrunt'
-alias k='kubectl'
+# Extract most know archives with one command
+extract () {
+  if [ -f "$1" ]; then
+    case "$1" in
+      *.tar.bz2) tar xjf "$1"    ;;
+      *.tar.gz)  tar xzf "$1"    ;;
+      *.bz2)     bunzip2 "$1"    ;;
+      *.rar)     unrar e "$1"    ;;
+      *.gz)      gunzip "$1"     ;;
+      *.tar)     tar xf "$1"     ;;
+      *.tbz2)    tar xjf "$1"    ;;
+      *.tgz)     tar xzf "$1"    ;;
+      *.zip)     unzip "$1"      ;;
+      *.Z)       uncompress "$1" ;;
+      *)         echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 
-#Make directory color not hurt my eyes
+# Show directory structure as a tree from `pwd`
+lstree() {
+  local -r shortpath="$(basename "$(pwd)")"
+  local -r output="$(tree -C -d --noreport "$@")"
+
+  (
+    echo "${output}" | head -n 1 | sed -e "s/^\\.$/${shortpath}/"
+    echo "${output}" | tail -n "$(($(echo "${output}" | wc -l)-1))"
+  ) | less -EFRSX
+}
+
+#Make directory color not hurt my eyes TODO fix on Mac
 force_color_prompt=yes
 LS_COLORS=$LS_COLORS:'di=0;36:' ; export LS_COLORS
