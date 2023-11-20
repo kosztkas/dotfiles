@@ -63,10 +63,13 @@ set wildmenu
 set wildignorecase
 
 "====== REMAPS ======
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee %
+
 " toggle auto-indent for code paste mode w/ F2 key		
 set pastetoggle=<F2>
 
-" toggle line numbers w/ F3 key
+" toggle line numbers w/ the F3 key
 noremap <F3> :set nu!<CR>
 inoremap <F3> <C-O>:set nu!<CR>
 
