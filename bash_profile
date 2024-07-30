@@ -8,10 +8,14 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     export BASH_SILENCE_DEPRECATION_WARNING=1
     export CLICOLOR=1
     export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+    export EDITOR=/usr/bin/vim
 fi
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+
+# Add bach completion for MacOS
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
 ### HISTORY ###
 
@@ -100,7 +104,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -122,6 +126,7 @@ alias tf='terraform'
 alias tg='terragrunt'
 alias k='kubectl'
 alias cat='bat'
+alias sc_all='find . -name \*.sh -print0 | xargs -0 shellcheck -x'
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
